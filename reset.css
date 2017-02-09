@@ -24,6 +24,8 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
   display: block;
 }
+/* TODO:  */
+/*rajoute un margin 0 sur le body sinon ca fait une marge blanche autour de ton site*/
 body {
   line-height: 1;
 }
