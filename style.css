@@ -1,3 +1,7 @@
+body {
+  margin: 0;
+}
+
 .header {
   background-image: url("pictures/paris-night.jpg");
   background-size: cover;
@@ -5,7 +9,6 @@
   height: 400px;
   position: relative;
   border-bottom: 2px solid #341002;
-
 }
 
 .navbar {
@@ -48,9 +51,7 @@
   padding: 23px;
 }
 
-
-
-.description-wrap {
+.group-wrap {
   position: absolute;
   height: 365px;
   width: 65%;
@@ -92,14 +93,14 @@
   background-size: cover;
 }
 
-.font-title {
+.title {
   margin-top: 0px;
-  padding: 15px 0px 20px 0px;
+  padding: 30px 0px 20px 0px;
   font-family: 'Montserrat', sans-serif;
   text-shadow: 3px 2px #070D1D;
   color: white;
   text-align: center;
-  font-size: 25px;
+  font-size: 35px;
 }
 
 .tracks-wrap{
@@ -132,12 +133,23 @@
   100% { transform: rotate(360deg); }
 }
 
+.no-spin {
+  animation: none;
+}
+
 
 .audio-track {
   float: right;
   z-index: 1;
 }
 
+.player-audio-position {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+}
 
 @media screen and (max-width: 630px){
 
@@ -157,7 +169,7 @@
     padding: 10px;
 }
 
-.description-wrap {
+.group-wrap {
     height: 260px;
     width: 100%;
     top: 250px;

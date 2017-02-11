@@ -1,4 +1,11 @@
 $(function(){
+  var loadStreamInPlayer = function(mp3){
+    var audio = $('audio')[0]
+    // equivalent = $('audio').attr('src', mp3)
+    audio.src = mp3
+    audio.load()
+    audio.play()
+  }
 
   var addDescriptionToHeader = function(logo, name, description){
     var logo = $('<img>').attr('src', logo).addClass('resize-logo')
@@ -16,15 +23,18 @@ $(function(){
   }
 
   var addTrackToView = function(photo, track){
-    var photo = $('<img>').attr('src', photo).addClass('resize-track-picture').on('click', function(){
-      $(this).toggleClass('spin-circle')
+    var photo = $('<img>')
+      .attr('src', photo)
+      .addClass('resize-track-picture')
+      .on('click', function(){
+        loadStreamInPlayer(track)
+        $('img').not($(this)).removeClass('spin-circle')
+        $(this).toggleClass('spin-circle')
     })
-
-    var track = $('<audio>').attr('src', track).addClass('audio-track')
 
     $('.js-tracks')
       .append(photo)
-      .append(track)
+
   }
 
   $.ajax('https://api-v2.hearthis.at/latroyon/')
@@ -36,7 +46,7 @@ $(function(){
   .done(function(tracks){
     for (var i = 0; i < tracks.length; i++) {
       var track = tracks[i]
-      addTrackToView(track.background_url, track.waveform_data)
+      addTrackToView(track.background_url, track.download_url)
     }
   })
 
