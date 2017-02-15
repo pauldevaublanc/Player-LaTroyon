@@ -1,4 +1,5 @@
 $(function(){
+
   var loadStreamInPlayer = function(mp3){
     var audio = $('audio')[0]
     // equivalent = $('audio').attr('src', mp3)
@@ -22,7 +23,8 @@ $(function(){
       .append(description)
   }
 
-  var addTrackToView = function(photo, track){
+  var addTrackToView = function(photo, track, name){
+
     var photo = $('<img>')
       .attr('src', photo)
       .addClass('resize-track-picture')
@@ -31,6 +33,8 @@ $(function(){
         $('img').not($(this)).removeClass('spin-circle')
         $(this).toggleClass('spin-circle')
     })
+
+    $('.js-title').text('Tracks de '+name+'')
 
     $('.js-tracks')
       .append(photo)
@@ -42,12 +46,32 @@ $(function(){
     addDescriptionToHeader(group.avatar_url, group.username, group.description)
   })
 
-  $.ajax('https://api-v2.hearthis.at/latroyon/?type=tracks')
+
+  var form = $('.js-artist-form');
+  var input = $('.js-artist-input');
+
+  var resetTracks = function(){
+    $('.js-tracks').empty();
+  }
+
+
+  form.on('submit', function(e){
+    e.preventDefault()
+    resetTracks();
+    var artist = input.val().replace(/\s/g, "");
+    input.val('');
+    if (artist == "") {
+        $('.js-tracks').html("<h2>Entre un artiste avant de lancer ta recherche</h2>").addClass('text')
+      }
+
+
+  $.ajax('https://api-v2.hearthis.at/'+artist+'/?type=tracks')
   .done(function(tracks){
     for (var i = 0; i < tracks.length; i++) {
       var track = tracks[i]
-      addTrackToView(track.background_url, track.download_url)
+
+        addTrackToView(track.background_url, track.download_url, track.user.username)
     }
   })
-
+})
 });

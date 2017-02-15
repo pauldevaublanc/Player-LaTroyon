@@ -25,7 +25,14 @@
       </div>
     </div>
     <div class="background-gradient">
-      <h2 class="title">Tracks</h2>
+    <form class="js-artist-form">
+      <div class="input-area">
+        <label for="artiste" class="input-area-label">Rechercher un artiste</label>
+        <input class="input-area-field js-artist-input" type="text" name="artiste" autocomplete="off">
+        <button class="input-area-button">Rechercher</button>
+      </div>
+      </form>
+      <h2 class="title js-title"></h2>
       <div class="js-tracks tracks-wrap">
       </div>
         <audio class ='player-audio-position js-player' controls></audio>
