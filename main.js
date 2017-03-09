@@ -5,6 +5,7 @@ $(function(){
     // equivalent = $('audio').attr('src', mp3)
     audio.src = mp3
     audio.load()
+    audio.pause()
     audio.play()
   }
 
@@ -34,7 +35,7 @@ $(function(){
         $(this).toggleClass('spin-circle')
     })
 
-    $('.js-title').text('Tracks de '+name+'')
+    $('.js-title').text('Tracks of '+name+'').addClass('title')
 
     $('.js-tracks')
       .append(photo)
@@ -51,7 +52,8 @@ $(function(){
   var input = $('.js-artist-input');
 
   var resetTracks = function(){
-    $('.js-tracks').empty();
+    $('.js-title').empty().removeClass('title');
+    $('.js-tracks').empty().removeClass('text-error');
   }
 
 
@@ -61,17 +63,42 @@ $(function(){
     var artist = input.val().replace(/\s/g, "");
     input.val('');
     if (artist == "") {
-        $('.js-tracks').html("<h2>Entre un artiste avant de lancer ta recherche</h2>").addClass('text')
+        $('.js-tracks').html("<h42>Choose an artist before starting the search</h4>").addClass('text-error')
       }
+    else {
 
-
-  $.ajax('https://api-v2.hearthis.at/'+artist+'/?type=tracks')
-  .done(function(tracks){
-    for (var i = 0; i < tracks.length; i++) {
-      var track = tracks[i]
-
+  $.ajax({
+    type: "GET",
+    url: 'https://api-v2.hearthis.at/'+artist+'/?type=tracks',
+    success: function(tracks){
+      for (var i = 0; i < tracks.length; i++) {
+        var track = tracks[i]
         addTrackToView(track.background_url, track.download_url, track.user.username)
+      }
+    },
+    error: function(){
+      resetTracks()
+      $('.js-tracks').addClass('text-error').html("<h4>Sorry, I don't know "+artist+"</h4>")
     }
-  })
+});
+}
+
+
 })
 });
+
+
+    // $.ajax({
+    //   type: "GET",
+    //   url: "https://api.github.com/users/" + username + "/repos",
+    //   success: function(data) {
+    //     $('#repos').empty();
+    //     data.forEach(function(repo) {
+    //       $('#repos').append('<li>' + repo.name + '</li>');
+    //     });
+    //   },
+    //   error: function(jqXHR) {
+    //     $('#repos').empty();
+    //     var errorMsg = JSON.parse(jqXHR.responseText).message;
+    //     $('#repos').html('<p>' + errorMsg + '</p>');
+    // });
