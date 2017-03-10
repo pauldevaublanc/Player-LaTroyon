@@ -1,12 +1,21 @@
 $(function(){
 
+  var currentMp3 = null
+
   var loadStreamInPlayer = function(mp3){
     var audio = $('audio')[0]
     // equivalent = $('audio').attr('src', mp3)
-    audio.src = mp3
-    audio.load()
-    audio.pause()
-    audio.play()
+    if (currentMp3 === mp3) {
+      if (audio.paused){
+        audio.play();
+      } else {
+        audio.pause()
+      }
+    } else {
+      currentMp3 = mp3
+      audio.src = mp3
+      audio.play()
+    }
   }
 
   var addDescriptionToHeader = function(logo, name, description){
@@ -63,42 +72,26 @@ $(function(){
     var artist = input.val().replace(/\s/g, "");
     input.val('');
     if (artist == "") {
-        $('.js-tracks').html("<h42>Choose an artist before starting the search</h4>").addClass('text-error')
-      }
+      $('.js-tracks').html("<h4>Choose an artist before starting the search</h4>").addClass('text-error')
+    }
     else {
 
-  $.ajax({
-    type: "GET",
-    url: 'https://api-v2.hearthis.at/'+artist+'/?type=tracks',
-    success: function(tracks){
-      for (var i = 0; i < tracks.length; i++) {
-        var track = tracks[i]
-        addTrackToView(track.background_url, track.download_url, track.user.username)
-      }
-    },
-    error: function(){
-      resetTracks()
-      $('.js-tracks').addClass('text-error').html("<h4>Sorry, I don't know "+artist+"</h4>")
+      $.ajax({
+        type: "GET",
+        url: 'https://api-v2.hearthis.at/'+artist+'/?type=tracks',
+        success: function(tracks){
+          for (var i = 0; i < tracks.length; i++) {
+            var track = tracks[i]
+            addTrackToView(track.background_url, track.download_url, track.user.username)
+          }
+        },
+        error: function(){
+          resetTracks()
+          $('.js-tracks').addClass('text-error').html("<h4>Sorry, I don't know "+artist+"</h4>")
+        }
+      });
     }
-});
-}
-
-
-})
+  })
 });
 
 
-    // $.ajax({
-    //   type: "GET",
-    //   url: "https://api.github.com/users/" + username + "/repos",
-    //   success: function(data) {
-    //     $('#repos').empty();
-    //     data.forEach(function(repo) {
-    //       $('#repos').append('<li>' + repo.name + '</li>');
-    //     });
-    //   },
-    //   error: function(jqXHR) {
-    //     $('#repos').empty();
-    //     var errorMsg = JSON.parse(jqXHR.responseText).message;
-    //     $('#repos').html('<p>' + errorMsg + '</p>');
-    // });

@@ -91,8 +91,8 @@ body {
 
 .background-gradient {
   background: #341002; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to left, #341002, #070D1D); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to left, #341002, #070D1D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: -webkit-linear-gradient(to left, #270B00, #130302); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #270B00, #130302); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   background-size: cover;
 }
 
@@ -278,7 +278,6 @@ body {
   width: 100%;
   height: 150px;
   flex-direction: column;
-  background-color: #130302;
 }
 
 .input-area-label {
